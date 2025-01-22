@@ -33,16 +33,17 @@ if ! command -v docker &> /dev/null; then
 fi
 
 # Print setup completion message
+echo ""
 echo "Setup completed!"
 echo "Before running the server:"
-echo "1. Make sure to add your GOOGLE_API_KEY to .env"
+echo "1. Make sure to add your GOOGLE_API_KEY and HUGGING_FACE_TOKEN to .env"
 echo "2. Choose how to run the server:"
 echo ""
 echo "Option 1: Run with Docker Compose (recommended)"
-echo "$ docker-compose up --build"
+echo "$ docker compose up"
 echo ""
-echo "Option 2: Run locally with Uvicorn"
-echo "$ uvicorn app.main:app --reload"
+echo "Option 2: Run locally with Fastapi"
+echo "$ fastapi dev main.py"
 echo ""
 echo "Option 3: Run tests"
-echo "$ pytest"
+echo "$ pytest -v"
