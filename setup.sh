@@ -32,11 +32,6 @@ if ! command -v docker &> /dev/null; then
     exit 1
 fi
 
-if ! command -v docker-compose &> /dev/null; then
-    echo "Docker Compose not found. Please install Docker Compose first."
-    exit 1
-fi
-
 # Print setup completion message
 echo "Setup completed!"
 echo "Before running the server:"
