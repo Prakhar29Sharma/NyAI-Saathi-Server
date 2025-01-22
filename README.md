@@ -1,6 +1,12 @@
 # Legal Research Assistant
 
-AI-powered legal research assistant using RAG (Retrieval Augmented Generation) pipeline.
+AI-powered legal research assistant - 
+- RAG framework : Haystack
+- Vector store : Qdrant
+- Embedding model : sentence-transformers/all-MiniLM-L6-v2
+- Dataset : opennyaiorg/InJudgements_dataset
+- Backend : FastAPI
+- Large Language Model (LLM) Supported : gemini-1.5-flash-latest
 
 ![system flow diagram](project_assets/system_flow.jpg)
 
