@@ -2,6 +2,8 @@
 
 AI-powered legal research assistant using RAG (Retrieval Augmented Generation) pipeline.
 
+![system flow diagram](project_assets/system_flow.jpg)
+
 ## Installation
 
 1. Clone the repository:
