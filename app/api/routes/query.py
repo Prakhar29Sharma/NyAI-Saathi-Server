@@ -18,6 +18,7 @@ class Document(BaseModel):
 
 class QueryRequest(BaseModel):
     query: str = Field(..., min_length=1, max_length=1000)
+    llm: str = Field(default="gemini", pattern="^(gemini|llama|mistral)$")
 
 class QueryResponse(BaseModel):
     answer: str
@@ -29,6 +30,7 @@ async def query_documents(
     pipeline_service: RAGPipelineService = Depends(get_pipeline_service)
 ) -> QueryResponse:
     try:
+        pipeline_service = get_pipeline_service(llm=request.llm)
         result = await pipeline_service.process_query(request.query)
         if not result or not result.get("answer"):
             raise QueryProcessingError("No results found")
