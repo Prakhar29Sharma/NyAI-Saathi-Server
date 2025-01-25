@@ -10,6 +10,7 @@ class Settings(BaseSettings):
     GOOGLE_API_KEY: str
     LLAMA3_API_KEY: str = ""
     HUGGINGFACE_TOKEN: str = ""
+    GROQ_API_KEY: str = ""
 
     model_config = SettingsConfigDict(env_file=".env", env_file_encoding='utf-8')
 
