@@ -9,24 +9,55 @@ from app.services.embedder_service import EmbedderService
 from app.services.qdrant_service import QdrantServcice
 
 class RAGPipelineService:
-    def __init__(self, qdrant_service: QdrantServcice, embedder_service: EmbedderService):
+    def __init__(self, qdrant_service: QdrantServcice, embedder_service: EmbedderService, type: str):
         self.qdrant_service = qdrant_service
         self.embedder_service = embedder_service
         self.pipeline = self._create_pipeline()
+        self.type = type
     
     def _create_pipeline(self):
-        prompt_template = """
-        You're a legal research assistant and given the following context of judgement,
-        answer the user query and also provide references / document links for the 
-        verification.
-        context : 
-        {% for document in documents %}
-        {{ document.content }}
-        {% endfor %}
 
-        Question: {{question}}
-        Answer:
-        """
+        prompt_template = ""
+
+        if type == "judgement":
+            prompt_template = """
+            You're a legal research assistant and given the following context of judgement,
+            answer the user query and also provide references / document links for the verification of same.
+            context : 
+            {% for document in documents %}
+            {{ document.content }}
+            {% endfor %}
+
+            Question: {{question}}
+            Answer:
+            """ 
+        elif type == "law":
+            prompt_template = """
+            You're a legal professional which explains indian laws and legal text in simlpe english to users 
+            and given the following context of indian laws, answer the user query 
+            and also provide references / document links if required for the verification of same.
+            context : 
+            {% for document in documents %}
+            {{ document.content }}
+            {% endfor %}
+
+            Question: {{question}}
+            Answer:
+            """
+        else:
+            prompt_template = """
+            You're a legal professional which explains indian laws and legal text in simlpe english to users 
+            and given the following context of indian laws, answer the user query 
+            and also provide references / document links if required for the verification of same.
+            context : 
+            {% for document in documents %}
+            {{ document.content }}
+            {% endfor %}
+
+            Question: {{question}}
+            Answer:
+            """
+
 
         prompt_builder = PromptBuilder(template=prompt_template)
         
@@ -55,8 +86,6 @@ class RAGPipelineService:
             }
 
             result = self.pipeline.run(pipeline_input)
-
-            print(result)
 
             return {
                 "answer": result["llm"]["replies"][0],
