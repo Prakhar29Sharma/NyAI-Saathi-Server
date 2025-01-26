@@ -71,6 +71,59 @@ class DatasetService:
             logger.error(f"Failed to load dataset: {str(e)}")
             raise
 
+    @staticmethod
+    async def load_indian_laws_dataset(client: QdrantClient):
+        try:
+            logger.info("Starting Indian Laws dataset loading...")
+            login(token=settings.HUGGINGFACE_TOKEN)
+            
+            logger.info("Fetching Indian Laws dataset...")
+            dataset = load_dataset(
+                "kshitij230/Indian-Law", 
+                split="train", 
+                streaming=True
+            )
+            
+            batch_size = 100
+            batch_count = 0
+            embedder = EmbedderService()
+
+            for batch in batched(dataset, batch_size):
+                logger.info(f"Processing batch {batch_count + 1}...")
+                docs = [
+                    Document(
+                        content=f"Question: {doc['Instruction']} Answer: {doc['Response']}", 
+                        meta={
+                            "question": doc["Instruction"],
+                            "answer": doc["Response"]
+                        }
+                    ) for doc in batch
+                ]
+
+                embeddings = await embedder.get_document_embeddings(
+                    [{"content": doc.content} for doc in docs]
+                )
+
+                ids = [idx for idx in range(batch_count * batch_size, (batch_count + 1) * batch_size)]
+                vectors = embeddings
+                payloads = [{"content": doc.content, "metadata": doc.meta} for doc in docs]
+
+                client.upsert(
+                    collection_name=settings.COLLECTION_NAME2,
+                    points=models.Batch(
+                        ids=ids,
+                        vectors=vectors,
+                        payloads=payloads,
+                    ),
+                )
+
+                batch_count += 1
+
+            logger.info("Indian Laws dataset upload completed")
+        except Exception as e:
+            logger.error(f"Failed to load Indian Laws dataset: {str(e)}")
+            raise
+
 def batched(iterable, n):
     it = iter(iterable)
     while True:

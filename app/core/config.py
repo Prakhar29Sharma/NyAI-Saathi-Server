@@ -5,6 +5,7 @@ class Settings(BaseSettings):
     QDRANT_HOST: str = "localhost"
     QDRANT_PORT: str = "6333"
     COLLECTION_NAME: str = "legal_documents"
+    COLLECTION_NAME2: str = "indian_laws"
     VECTOR_SIZE: int = 384
     EMBEDDING_MODEL: str = "sentence-transformers/all-MiniLM-L6-v2"
     GOOGLE_API_KEY: str
