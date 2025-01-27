@@ -8,6 +8,8 @@ AI-powered legal research assistant -
 - Backend : FastAPI
 - Large Language Model (LLM) Supported : gemini-1.5-flash-latest
 
+![image](https://github.com/user-attachments/assets/6ef06a52-3963-487b-ac08-5871250be3ca)
+
 ![system flow diagram](project_assets/system_flow.jpg)
 
 ## Installation
