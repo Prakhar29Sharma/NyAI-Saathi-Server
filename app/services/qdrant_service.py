@@ -5,7 +5,7 @@ from app.core.config import settings
 from app.core.logging import logger
 
 
-class QdrantServcice:
+class QdrantService:
     def __init__(self, client: QdrantClient, collection_name: str = "judgement"):
         self.client = client
         self.collection_name = collection_name

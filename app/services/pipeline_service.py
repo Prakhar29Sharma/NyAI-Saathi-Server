@@ -1,15 +1,14 @@
 from haystack import Pipeline
-from haystack.components.embedders import SentenceTransformersTextEmbedder
 from haystack.components.builders import PromptBuilder
 from haystack_integrations.components.generators.google_ai import GoogleAIGeminiGenerator
 from haystack.utils import Secret
 from app.core.config import settings
 from app.core.exceptions import QueryProcessingError
 from app.services.embedder_service import EmbedderService
-from app.services.qdrant_service import QdrantServcice
+from app.services.qdrant_service import QdrantService
 
 class RAGPipelineService:
-    def __init__(self, qdrant_service: QdrantServcice, embedder_service: EmbedderService, type: str):
+    def __init__(self, qdrant_service: QdrantService, embedder_service: EmbedderService, type: str):
         self.qdrant_service = qdrant_service
         self.embedder_service = embedder_service
         self.pipeline = self._create_pipeline()
@@ -64,7 +63,7 @@ class RAGPipelineService:
         pipeline = Pipeline()
         pipeline.add_component("prompt_builder", prompt_builder)
         pipeline.add_component("llm", GoogleAIGeminiGenerator(
-            model="gemini-1.5-flash-latest",
+            model="gemini-2.0-flash",
             api_key=Secret.from_token(settings.GOOGLE_API_KEY)
         ))
         
