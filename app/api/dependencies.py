@@ -1,7 +1,7 @@
 from functools import lru_cache
 from app.services.pipeline_service import RAGPipelineService
 from app.services.embedder_service import EmbedderService
-from app.services.qdrant_service import QdrantServcice
+from app.services.qdrant_service import QdrantService
 
 _pipeline_service_judgement = None
 _pipeline_service_laws = None
@@ -15,7 +15,7 @@ def get_judgement_pipeline_service() -> RAGPipelineService:
 @lru_cache
 async def initialize_judgement_pipeline_service(qdrant_client) -> None:
     global _pipeline_service_judgement
-    qdrant_service = QdrantServcice(client=qdrant_client, collection_name="judgement")
+    qdrant_service = QdrantService(client=qdrant_client, collection_name="judgement")
     embedder_service = EmbedderService()
     _pipeline_service_judgement = RAGPipelineService(
         qdrant_service=qdrant_service,
@@ -32,7 +32,7 @@ def get_laws_pipeline_service() -> RAGPipelineService:
 @lru_cache
 async def initialize_laws_pipeline_service(qdrant_client) -> None:
     global _pipeline_service_laws
-    qdrant_service = QdrantServcice(client=qdrant_client, collection_name="laws")
+    qdrant_service = QdrantService(client=qdrant_client, collection_name="laws")
     embedder_service = EmbedderService()
     _pipeline_service_laws = RAGPipelineService(
         qdrant_service=qdrant_service,
