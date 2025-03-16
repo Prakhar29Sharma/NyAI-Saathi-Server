@@ -52,7 +52,7 @@ async def getQueryResponse(query: str, context: str, context_type: str = "judgem
         """
 
     try:
-        model = genai.GenerativeModel('gemini-1.5-flash')
+        model = genai.GenerativeModel('gemini-2.0-flash')
         response = model.generate_content(prompt)
         return response.text
     except Exception as e:
@@ -83,7 +83,7 @@ async def evaluate_faithfulness(context: str, answer: str) -> float:
     """
     
     try:
-        model = genai.GenerativeModel('gemini-1.5-flash')
+        model = genai.GenerativeModel('gemini-2.0-flash')
         response = model.generate_content(prompt)
         score_text = response.text.strip()
         score_match = re.search(r'\b(\d+(\.\d+)?)\b', score_text)
@@ -117,7 +117,7 @@ async def evaluate_answer_relevancy(question: str, answer: str) -> float:
     """
     
     try:
-        model = genai.GenerativeModel('gemini-1.5-flash')
+        model = genai.GenerativeModel('gemini-2.0-flash')
         response = model.generate_content(prompt)
         score_text = response.text.strip()
         score_match = re.search(r'\b(\d+(\.\d+)?)\b', score_text)
@@ -151,7 +151,7 @@ async def evaluate_context_relevancy(question: str, context: str) -> float:
     """
     
     try:
-        model = genai.GenerativeModel('gemini-1.5-flash')
+        model = genai.GenerativeModel('gemini-2.0-flash')
         response = model.generate_content(prompt)
         score_text = response.text.strip()
         score_match = re.search(r'\b(\d+(\.\d+)?)\b', score_text)
@@ -188,7 +188,7 @@ async def evaluate_context_precision(question: str, answer: str, context: str) -
     """
     
     try:
-        model = genai.GenerativeModel('gemini-1.5-flash')
+        model = genai.GenerativeModel('gemini-2.0-flash')
         response = model.generate_content(prompt)
         score_text = response.text.strip()
         score_match = re.search(r'\b(\d+(\.\d+)?)\b', score_text)
@@ -225,7 +225,7 @@ async def evaluate_answer_completeness(question: str, answer: str, context: str)
     """
     
     try:
-        model = genai.GenerativeModel('gemini-1.5-flash')
+        model = genai.GenerativeModel('gemini-2.0-flash')
         response = model.generate_content(prompt)
         score_text = response.text.strip()
         score_match = re.search(r'\b(\d+(\.\d+)?)\b', score_text)
@@ -256,7 +256,7 @@ async def evaluate_citation_quality(answer: str) -> float:
     """
     
     try:
-        model = genai.GenerativeModel('gemini-1.5-flash')
+        model = genai.GenerativeModel('gemini-2.0-flash')
         response = model.generate_content(prompt)
         score_text = response.text.strip()
         score_match = re.search(r'\b(\d+(\.\d+)?)\b', score_text)
@@ -290,7 +290,7 @@ async def evaluate_legal_reasoning(question: str, answer: str) -> float:
     """
     
     try:
-        model = genai.GenerativeModel('gemini-1.5-flash')
+        model = genai.GenerativeModel('gemini-2.0-flash')
         response = model.generate_content(prompt)
         score_text = response.text.strip()
         score_match = re.search(r'\b(\d+(\.\d+)?)\b', score_text)
@@ -353,7 +353,7 @@ async def comprehensive_evaluate(question: str, context: str, answer: str, groun
             2. Return ONLY the numerical score between 0 and 10.
             """
             
-            model = genai.GenerativeModel('gemini-1.5-flash')
+            model = genai.GenerativeModel('gemini-2.0-flash')
             response = model.generate_content(similarity_prompt)
             score_text = response.text.strip()
             score_match = re.search(r'\b(\d+(\.\d+)?)\b', score_text)

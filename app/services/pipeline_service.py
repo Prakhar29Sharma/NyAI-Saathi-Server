@@ -63,7 +63,7 @@ class RAGPipelineService:
         pipeline = Pipeline()
         pipeline.add_component("prompt_builder", prompt_builder)
         pipeline.add_component("llm", GoogleAIGeminiGenerator(
-            model="gemini-1.5-flash-latest",
+            model="gemini-2.0-flash",
             api_key=Secret.from_token(settings.GOOGLE_API_KEY)
         ))
         
