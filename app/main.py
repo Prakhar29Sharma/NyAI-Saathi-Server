@@ -12,17 +12,14 @@ app = FastAPI(title=settings.PROJECT_NAME)
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],  # client
+    allow_origins=["https://nyaisaathi.tech/", "https://nyaisaathi.tech/*"], 
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
 # Mount static files directory
-static_dir = os.path.join(os.path.dirname(__file__), "static")
-if not os.path.exists(static_dir):
-    os.makedirs(static_dir)
-app.mount("/static", StaticFiles(directory=static_dir), name="static")
+app.mount("/api/static", StaticFiles(directory="/var/www/nyai-static"), name="static")
 
 @app.on_event("startup")
 async def startup_events():
@@ -35,8 +32,8 @@ async def startup_events():
     return {"status": "initialized"}
 
 # Include routers with the correct prefix
-app.include_router(query.router, prefix="/api/v1")  # This will result in /api/v1/query/laws
-app.include_router(pipeline_visualization.router, prefix="/api/v1")
+app.include_router(query.router, prefix="/v1")  # This will result in /api/v1/query/laws
+app.include_router(pipeline_visualization.router, prefix="/v1")
 
 @app.get('/health')
 async def health_check():
